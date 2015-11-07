@@ -27,3 +27,4 @@ script:
   - npm test
   - "[ $BROWSER == false ] || npm run test-browser"
   - "[ $BROWSER == false ] || karma start karma.conf-sauce.js"
+after_success: npm run coveralls

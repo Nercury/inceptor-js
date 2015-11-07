@@ -1,5 +1,10 @@
 # Inceptor.js
 
+[![Build Status](https://travis-ci.org/Nercury/inceptor-js.svg?branch=master)](https://travis-ci.org/Nercury/inceptor-js)
+[![Coverage Status](https://coveralls.io/repos/Nercury/inceptor-js/badge.svg?branch=master&service=github)](https://coveralls.io/github/Nercury/inceptor-js?branch=master)
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/nercury.svg)](https://saucelabs.com/u/nercury)
+
 ## Ownership-driven dependency injection for JavaScript
 
 Usually, dependency injection frameworks rely on central container

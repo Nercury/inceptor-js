@@ -84,6 +84,7 @@ module.exports = function(config) {
 
     captureTimeout: 120000,
     customLaunchers: sauceBrowsers,
+    'public': 'public',
 
     // Browsers to launch, commented out to prevent karma from starting
     // too many concurrent browsers and timing sauce out.
