@@ -3,12 +3,12 @@ language: node_js
 
 env:
   matrix: BROWSER=false
-
+node_js:
+  - "0.8"
+  - "0.10"
+  - "0.12"
 matrix:
   include:
-    - node_js: "0.8"
-    - node_js: "0.10"
-    - node_js: "0.12"
     - node_js: "4.0"
       env: BROWSER=true
 before_install:
