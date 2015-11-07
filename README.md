@@ -27,9 +27,9 @@ It runs your code when all dependencies are created.
 
 Let's look at simple example.
 
-Suppose we have a simple __logger__ that logs our messages to multiple __backend__s.
+Suppose we have a simple __logger__ that logs our messages to multiple __backends__.
 
-In traditional DI, we would inject the __backend__s into the __logger__ constructor.
+In traditional DI, we would inject the __backends__ into the __logger__ constructor.
 
 Here, we do the reverse: we tell the __logger__ to require the __backend__.
 
@@ -49,7 +49,7 @@ var Logger = inceptor.scope({
 });
 ```
 
-Here, we achieved the abstraction: the __logger__ knows nothing about the backends, the only thing it requires is that they implement the `log()` method.
+Here, we achieved the abstraction: the __logger__ knows nothing about the __backends__, the only thing it requires is that they implement the `log()` method.
 
 Let's see the code for __backend__:
 
