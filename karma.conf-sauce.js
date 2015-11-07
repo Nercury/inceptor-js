@@ -1,4 +1,4 @@
-var _ = require('./');
+var _ = require('underscore');
 
 // Browsers to run on Sauce Labs platforms
 var sauceBrowsers = _.reduce([

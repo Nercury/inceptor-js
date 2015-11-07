@@ -21,4 +21,4 @@ before_script:
 script:
   - npm test
   - "[ $BROWSER == false ] || npm run test-browser"
-  - "[ $BROWSER == false ] || karma start karma.conf-sauce.js"
+  - "[ $BROWSER == false ] || npm install underscore && karma start karma.conf-sauce.js"
