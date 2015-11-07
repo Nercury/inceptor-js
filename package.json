@@ -5,6 +5,10 @@
   "main": "inceptor.js",
   "author": "Nerijus Arlauskas <nercury@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nercury/inceptor-js.git"
+  },
   "devDependencies": {
     "coveralls": "^2.11.2",
     "docco": "*",

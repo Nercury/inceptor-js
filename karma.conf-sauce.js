@@ -64,7 +64,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/vendor/qunit-extras.js',
-      'underscore.js',
+      'inceptor.js',
       'test/*.js'
     ],
 
