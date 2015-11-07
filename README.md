@@ -31,7 +31,7 @@ Suppose we have a simple __logger__ that logs our messages to multiple __backend
 
 In traditional DI, we would inject the __backends__ into the __logger__ constructor.
 
-Here, we do the reverse: we tell the __logger__ to require the __backend__.
+Here, we do the reverse: we tell the __backend__ to require the __logger__.
 
 Let's see the code for __logger__:
 
