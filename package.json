@@ -1,0 +1,40 @@
+{
+  "name": "inceptor",
+  "version": "1.0.0",
+  "description": "Ownership-driven dependency injection for Javascript",
+  "main": "inceptor.js",
+  "author": "Nerijus Arlauskas <nercury@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "docco": "*",
+    "eslint": "0.21.x",
+    "karma": "^0.13.13",
+    "karma-qunit": "~0.1.4",
+    "nyc": "^2.1.3",
+    "qunit-cli": "~0.2.0",
+    "qunitjs": "^1.18.0",
+    "uglify-js": "2.4.x"
+  },
+  "scripts": {
+    "test": "npm run test-node && npm run lint",
+    "coverage": "nyc npm run test-node && nyc report",
+    "coveralls": "nyc npm run test-node && nyc report --reporter=text-lcov | coveralls",
+    "lint": "eslint --reset inceptor.js test/*.js",
+    "test-node": "qunit-cli test/*.js",
+    "test-browser": "npm i karma-phantomjs-launcher && ./node_modules/karma/bin/karma start",
+    "build": "uglifyjs inceptor.js -c \"evaluate=false\" --comments \"/    .*/\" -m --source-map inceptor-min.map --source-map-url \" \" -o inceptor-min.js",
+    "doc": "docco inceptor.js"
+  },
+  "keywords": [
+    "di",
+    "dependency",
+    "injection",
+    "dependencies"
+  ],
+  "files": [
+    "underscore.js",
+    "underscore-min.js",
+    "underscore-min.map"
+  ]
+}

@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>inceptor.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>inceptor.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">global</span>) </span>{
+<span class="hljs-pi">    'use strict'</span>;
+
+    <span class="hljs-keyword">var</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Minimal chunk of underscore.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _ = {},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Custom utils.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        utils = {}
+    ;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2 id="scopes">Scopes</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>We need to generate scope ids for each
+registered scope, because the “scope” can be
+thought of as a type that will need to be indentified.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> nextId = <span class="hljs-number">1</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Creates a child dependency on parent scopes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    global.scope = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>A scope object which is automatically created when
+the parent is created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> Scope = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Scope construction always calls “initialize”.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.initialize.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Use the next id for scope.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        Scope.typeId = nextId;
+        nextId += <span class="hljs-number">1</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>If there are 2 arguments, scope has dependencies.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> hasDependencies = _.isArray(<span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>]);
+        <span class="hljs-keyword">var</span> dependencies = [];
+        <span class="hljs-keyword">var</span> obj;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>If scope has dependencies, they come from first argument.
+The last one is scope implementation object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (hasDependencies) {
+            obj = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">1</span>];
+            dependencies = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>];
+        } <span class="hljs-keyword">else</span> {
+            obj = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>];
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Scope dependencies are “above” Scope types;
+They are a “list of things” that need to be created
+as arguments for actual “new Scope” invocation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        Scope.dependencies = dependencies;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>If supplied thing is a function, modify it to become
+the “initialize” method.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> implementation = _.isFunction(obj) ? {
+            initialize: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                obj.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+            }
+        } : obj;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>By default, initialize and ready will do nothing.
+If an initialize or ready is defined on implementation, they
+will become part of scope’s prototype.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _.extend(
+            Scope.prototype,
+            {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Initialize will be called as soon as scope is
+created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                initialize: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Ready will be called when all scope’s children are
+created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                ready: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ }
+            },
+            implementation
+        );
+
+        <span class="hljs-keyword">return</span> Scope;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h2 id="dependency-map">Dependency map</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Tracks all scopes that are dependent on one another.
+A scope will not be automatically loaded unless it is
+added to this dependency map, and this same map is used
+on parent scope creation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Deps</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Tracks all loaded scopes, so that they are not loaded twice.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.loadedList = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Constructors contain a list of functions for each scope type
+that are invoked when a scope is initialized.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.constructors = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>List of new created instances that were not processed for dependencies.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.instanceQueue = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>List of inceptions that were started but not finished.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.unfinishedInceptions = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Breaks recursion when creating new instance while creating new instance.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.creatingDependencies = <span class="hljs-literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Load arguments as Scopes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.load(<span class="hljs-built_in">arguments</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Expose Deps.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    global.Deps = Deps;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Expose a helper to create Deps.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    global.load = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> utils.construct(Deps, <span class="hljs-built_in">arguments</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Loads a scope list and all child scopes into this dependency map.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Deps.prototype.load = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">loadList</span>) </span>{
+        acceptLoaderList(<span class="hljs-keyword">this</span>, loadList);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Create new instance of scope together with all loaded Deps.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Deps.prototype.create = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">Scope, args</span>) </span>{
+        <span class="hljs-keyword">var</span> instance = utils.construct(Scope, args);
+        <span class="hljs-keyword">this</span>.instanceQueue.push(instance);
+        createDependencies(<span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">return</span> instance;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Given a loader list, load all of it and dependent loaders.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">acceptLoaderList</span>(<span class="hljs-params">deps, loadList</span>) </span>{
+        <span class="hljs-keyword">var</span> i, j, loader, nextLoadList = [];
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pushOtherScope</span>(<span class="hljs-params">OtherScope</span>) </span>{
+            nextLoadList.push(OtherScope);
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>While there is something in load list call <code>accept</code> on them.</p>
+<p>This ensures the loadScope can only be called from loader that was added into loader list.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">while</span> (loadList.length &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; loadList.length; i++) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>take loader item</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                loader = loadList[i];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>if the loader is array, iterate over it and add new loaders from it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (_.isArray(loader)) {
+                    <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; loader.length; j++) {
+                        nextLoadList.push(loader[j]);
+                    }
+                    <span class="hljs-keyword">continue</span>;
+                }
+
+                loadScope(deps, loader, pushOtherScope);
+            }
+            loadList = nextLoadList;
+            nextLoadList = [];
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Load scope with all its dependencies into Deps.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadScope</span>(<span class="hljs-params">deps, Scope, alsoLoad</span>) </span>{
+        <span class="hljs-keyword">var</span> i, inception, ParentScope;
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> Scope === <span class="hljs-string">'undefined'</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Trying to load undefined value as Scope.'</span>);
+        }
+
+        <span class="hljs-keyword">if</span> (!Scope.hasOwnProperty(<span class="hljs-string">'typeId'</span>)) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Failed to load Scope - received object with no typeId.'</span>);
+        }
+
+        <span class="hljs-keyword">if</span> (deps.loaded) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Should not load more scopes after any of the loaded scopes were created.'</span>);
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Make sure to not load scope twice</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (deps.loadedList.hasOwnProperty(Scope.typeId)) {
+            <span class="hljs-keyword">return</span>;
+        }
+
+        deps.loadedList[Scope.typeId] = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-keyword">if</span> (Scope.dependencies.length === <span class="hljs-number">0</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>no dependencies</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (Scope.dependencies.length === <span class="hljs-number">1</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>If scope has single dependency, no inceptor is needed -
+simply load child as soon as parent loads.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+            ParentScope = Scope.dependencies[<span class="hljs-number">0</span>];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Add constructor that creates child scope with a parent
+instance as an argument.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            getOrCreateConstructorList(deps, ParentScope)[Scope.typeId]
+                = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">instance</span>) </span>{
+                    deps.instanceQueue.push(<span class="hljs-keyword">new</span> Scope(instance));
+                };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Schedule the <code>load</code> call on parent scope.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            alsoLoad(ParentScope);
+
+        } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>If scope has multiple dependencies, use inceptor to ensure that it is
+created when all parents are created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+            inception = <span class="hljs-keyword">new</span> Inceptor(Scope, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) </span>{
+                deps.instanceQueue.push(utils.construct(Scope, args));
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>When first argument is created we receive <code>onStart</code> and can
+know that inceptor is not finished.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            inception.onStart(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">typeId, inceptor</span>) </span>{
+                deps.unfinishedInceptions[typeId] = inceptor;
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>When inceptor is finished we can remove it from unfinished inceptor list.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            inception.onFinish(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">typeId</span>) </span>{
+                <span class="hljs-keyword">delete</span> deps.unfinishedInceptions[typeId];
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Add hooks to notify inceptor about created parent argument instances.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; Scope.dependencies.length; i++) {
+                ParentScope = Scope.dependencies[i];
+
+                getOrCreateConstructorList(deps, ParentScope)[Scope.typeId]
+                    = inception.createAndPushArgHook(i);
+
+                alsoLoad(ParentScope);
+            }
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Constructor list is a list of functions that should be called
+when the scope object is created.</p>
+<p>There is a separate list for each loaded type stored in the
+<code>constructors</code> variable.</p>
+<p>This function creates it for the specified scope or gets existing.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getOrCreateConstructorList</span>(<span class="hljs-params">deps, Scope</span>) </span>{
+        <span class="hljs-keyword">if</span> (deps.constructors.hasOwnProperty(Scope.typeId)) {
+            <span class="hljs-keyword">return</span> deps.constructors[Scope.typeId];
+        }
+
+        <span class="hljs-keyword">var</span> constructorList = {};
+        deps.constructors[Scope.typeId] = constructorList;
+
+        <span class="hljs-keyword">return</span> constructorList;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>Consume instance queue and create dependencies for each instance in it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createDependencies</span>(<span class="hljs-params">deps</span>) </span>{
+        <span class="hljs-keyword">var</span> readyQueue = [],
+            i, j,
+            instances,
+            instance,
+            Scope,
+            typeId,
+            list;
+
+        <span class="hljs-keyword">if</span> (deps.creatingDependencies) {
+            <span class="hljs-keyword">return</span>;
+        }
+
+        deps.creatingDependencies = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-keyword">while</span> (deps.instanceQueue.length &gt; <span class="hljs-number">0</span> || _.size(deps.unfinishedInceptions) &gt; <span class="hljs-number">0</span>) {
+
+            <span class="hljs-keyword">while</span> (deps.instanceQueue.length &gt; <span class="hljs-number">0</span>) {
+                instances = deps.instanceQueue;
+                deps.instanceQueue = [];
+
+                <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; instances.length; i++) {
+                    instance = instances[i];
+                    Scope = instance.constructor;
+                    typeId = Scope.typeId;
+
+                    readyQueue.push(instance);
+
+                    <span class="hljs-keyword">if</span> (deps.constructors.hasOwnProperty(typeId)) {
+                        list = _.keys(deps.constructors[typeId]);
+                        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; list.length; j++) {
+                            deps.constructors[typeId][list[j]](instance);
+                        }
+                    }
+                }
+            }
+
+            <span class="hljs-keyword">while</span> (_.size(deps.unfinishedInceptions) &gt; <span class="hljs-number">0</span>) {
+                list = _.keys(deps.unfinishedInceptions);
+                <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; list.length; i++) {
+                    deps.unfinishedInceptions[list[i]].finish();
+                }
+            }
+        }
+
+        deps.creatingDependencies = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; readyQueue.length; i++) {
+            readyQueue[i].ready();
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <h2 id="internal-inceptor">Internal Inceptor</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>Runs a callback when all specified callback hooks are invoked.</p>
+<p>Used to create an instance when all parent instances are created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Inceptor</span>(<span class="hljs-params">Scope, newInstanceCallback</span>) </span>{
+        <span class="hljs-keyword">this</span>.Scope = Scope;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>Target instance identifier.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.typeId = Scope.typeId;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>New instance creation hook, runs when all parents are created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.newInstanceCallback = newInstanceCallback;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>List of last processed instances used as arguments for new instance.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.instances = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>List of new instances for next creation step.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.newInstances = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <p>When all values in this array are true, all instances are available.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.created = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <p>Creation step has started.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.started = <span class="hljs-literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>Notify when first instance in creation step is created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.onStartCallback = <span class="hljs-literal">null</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Notify when the inceptor has finished creation step.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.onFinishCallback = <span class="hljs-literal">null</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>Register new instance creation hook. The number of registered hooks should match
+the number of arguments that are expected in <code>newInstanceCallback</code>.</p>
+<p>Each hook will notify about creation of parent instance which will be used as argument
+for specified <code>index</code> position.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Inceptor.prototype.createAndPushArgHook = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index</span>) </span>{
+        <span class="hljs-keyword">this</span>.instances.push(<span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">this</span>.newInstances.push(<span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">this</span>.created.push(<span class="hljs-literal">false</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              <p>New instance was created for parent argument <code>index</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">instance</span>) </span>{
+            <span class="hljs-keyword">this</span>.created[index] = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">this</span>.newInstances[index] = instance;
+
+            <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.started) {
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.onStartCallback !== <span class="hljs-literal">null</span>) {
+                    <span class="hljs-keyword">this</span>.onStartCallback(<span class="hljs-keyword">this</span>.typeId, <span class="hljs-keyword">this</span>);
+                }
+                <span class="hljs-keyword">this</span>.started = <span class="hljs-literal">true</span>;
+            }
+        }.bind(<span class="hljs-keyword">this</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>Finish is invoked when some external resolver has resolved all possible parent arguments
+and there is nothing else to do.</p>
+<p>In that case the inceptor will use all collected arguments as inputs for new instance,
+and when new instance creation is possible invoke <code>newInstanceCallback</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Inceptor.prototype.finish = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> allCreated = <span class="hljs-literal">true</span>,
+            i;
+
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.created.length; i++) {
+            <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.created[i]) {
+                allCreated = <span class="hljs-literal">false</span>;
+                <span class="hljs-keyword">break</span>;
+            }
+        }
+
+        <span class="hljs-keyword">if</span> (allCreated) {
+            <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.instances.length; i++) {
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.newInstances[i] !== <span class="hljs-literal">null</span>) {
+                    <span class="hljs-keyword">this</span>.instances[i] = <span class="hljs-keyword">this</span>.newInstances[i];
+                }
+            }
+
+            <span class="hljs-keyword">this</span>.newInstanceCallback(<span class="hljs-keyword">this</span>.instances);
+            <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.newInstances.length; i++) {
+                <span class="hljs-keyword">this</span>.newInstances[i] = <span class="hljs-literal">null</span>;
+            }
+        }
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.onFinishCallback !== <span class="hljs-literal">null</span>) {
+            <span class="hljs-keyword">this</span>.onFinishCallback(<span class="hljs-keyword">this</span>.typeId);
+        }
+
+        <span class="hljs-keyword">this</span>.started = <span class="hljs-literal">false</span>;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>Get notified when first parent argument is created. This means the inceptor is waiting
+for full list of arguments.</p>
+<p>When you know that there are no other arguments possible, call <code>finish</code>. The inceptor
+will use all collected arguments ar parameters for new instance.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Inceptor.prototype.onStart = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">callback</span>) </span>{
+        <span class="hljs-keyword">this</span>.onStartCallback = callback;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p>Inceptor is finished and you can forget it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Inceptor.prototype.onFinish = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">callback</span>) </span>{
+        <span class="hljs-keyword">this</span>.onFinishCallback = callback;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <h2 id="underscore">Underscore</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <p>Small this library uses very basic helpers from underscore.js.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+    <span class="hljs-keyword">var</span>
+        nativeIsArray = <span class="hljs-built_in">Array</span>.isArray,
+        nativeKeys = <span class="hljs-built_in">Object</span>.keys;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <p>Save bytes in the minified (but not gzipped) version:</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> ObjProto = <span class="hljs-built_in">Object</span>.prototype;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>Create quick reference variables for speed access to core prototypes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span>
+        toString = ObjProto.toString,
+        hasOwnProperty = ObjProto.hasOwnProperty;
+
+    <span class="hljs-keyword">var</span> property = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">key</span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+            <span class="hljs-keyword">return</span> obj == <span class="hljs-literal">null</span> ? <span class="hljs-keyword">void</span> <span class="hljs-number">0</span> : obj[key];
+        };
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>Helper for collection methods to determine whether a collection
+should be iterated as an array or as an object.
+Related: <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength">http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength</a>
+Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> MAX_ARRAY_INDEX = <span class="hljs-built_in">Math</span>.pow(<span class="hljs-number">2</span>, <span class="hljs-number">53</span>) - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">var</span> getLength = property(<span class="hljs-string">'length'</span>);
+    <span class="hljs-keyword">var</span> isArrayLike = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">collection</span>) </span>{
+        <span class="hljs-keyword">var</span> length = getLength(collection);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> length == <span class="hljs-string">'number'</span> &amp;&amp; length &gt;= <span class="hljs-number">0</span> &amp;&amp; length &lt;= MAX_ARRAY_INDEX;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>Add some isType methods: isFunction.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.isFunction = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+        <span class="hljs-keyword">return</span> toString.call(obj) === <span class="hljs-string">'[object Function]'</span>;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>Optimize <code>isFunction</code> if appropriate. Work around some typeof bugs in old v8,
+IE 11 (#1621), Safari 8 (#1929), and PhantomJS (#2236).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> nodelist = <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">document</span> !== <span class="hljs-string">'undefined'</span> &amp;&amp; <span class="hljs-built_in">document</span>.childNodes;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> /./ != <span class="hljs-string">'function'</span> &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Int8Array</span> != <span class="hljs-string">'object'</span> &amp;&amp; <span class="hljs-keyword">typeof</span> nodelist != <span class="hljs-string">'function'</span>) {
+        _.isFunction = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> obj == <span class="hljs-string">'function'</span> || <span class="hljs-literal">false</span>;
+        };
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>Is a given value an array?
+Delegates to ECMA5’s native Array.isArray</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.isArray = nativeIsArray || <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+        <span class="hljs-keyword">return</span> toString.call(obj) === <span class="hljs-string">'[object Array]'</span>;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <p>Is a given variable an object?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.isObject = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+        <span class="hljs-keyword">var</span> type = <span class="hljs-keyword">typeof</span> obj;
+        <span class="hljs-keyword">return</span> type === <span class="hljs-string">'function'</span> || type === <span class="hljs-string">'object'</span> &amp;&amp; !!obj;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              <p>Keys in IE &lt; 9 that won’t be iterated by <code>for key in ...</code> and thus missed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> hasEnumBug = !{toString: <span class="hljs-literal">null</span>}.propertyIsEnumerable(<span class="hljs-string">'toString'</span>);
+    <span class="hljs-keyword">var</span> nonEnumerableProps = [<span class="hljs-string">'valueOf'</span>, <span class="hljs-string">'isPrototypeOf'</span>, <span class="hljs-string">'toString'</span>,
+        <span class="hljs-string">'propertyIsEnumerable'</span>, <span class="hljs-string">'hasOwnProperty'</span>, <span class="hljs-string">'toLocaleString'</span>];
+
+    <span class="hljs-keyword">var</span> collectNonEnumProps = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, keys</span>) </span>{
+        <span class="hljs-keyword">var</span> nonEnumIdx = nonEnumerableProps.length;
+        <span class="hljs-keyword">var</span> constructor = obj.constructor;
+        <span class="hljs-keyword">var</span> proto = _.isFunction(constructor) &amp;&amp; constructor.prototype || ObjProto;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-73">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-73">&#182;</a>
+              </div>
+              <p>Constructor is a special case.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> prop = <span class="hljs-string">'constructor'</span>;
+        <span class="hljs-keyword">if</span> (_.has(obj, prop) &amp;&amp; !_.contains(keys, prop)) {
+            keys.push(prop);
+        }
+
+        <span class="hljs-keyword">while</span> (nonEnumIdx--) {
+            prop = nonEnumerableProps[nonEnumIdx];
+            <span class="hljs-keyword">if</span> (prop <span class="hljs-keyword">in</span> obj &amp;&amp; obj[prop] !== proto[prop] &amp;&amp; !_.contains(keys, prop)) {
+                keys.push(prop);
+            }
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-74">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-74">&#182;</a>
+              </div>
+              <p>Shortcut function for checking if an object has a given property directly
+on itself (in other words, not on a prototype).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.has = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, key</span>) </span>{
+        <span class="hljs-keyword">return</span> obj != <span class="hljs-literal">null</span> &amp;&amp; hasOwnProperty.call(obj, key);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-75">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p>Retrieve the names of an object’s own properties.
+Delegates to <strong>ECMAScript 5</strong>‘s native <code>Object.keys</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.keys = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+        <span class="hljs-keyword">if</span> (!_.isObject(obj)) {
+            <span class="hljs-keyword">return</span> [];
+        }
+        <span class="hljs-keyword">if</span> (nativeKeys) {
+            <span class="hljs-keyword">return</span> nativeKeys(obj);
+        }
+        <span class="hljs-keyword">var</span> keys = [];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> obj) {
+            <span class="hljs-keyword">if</span> (_.has(obj, key)) {
+                keys.push(key);
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <p>Ahem, IE &lt; 9.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (hasEnumBug) {
+            collectNonEnumProps(obj, keys);
+        }
+        <span class="hljs-keyword">return</span> keys;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              <p>Retrieve all the property names of an object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.allKeys = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+        <span class="hljs-keyword">if</span> (!_.isObject(obj)) {
+            <span class="hljs-keyword">return</span> [];
+        }
+        <span class="hljs-keyword">var</span> keys = [];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> obj) {
+            keys.push(key);
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>Ahem, IE &lt; 9.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (hasEnumBug) {
+            collectNonEnumProps(obj, keys);
+        }
+        <span class="hljs-keyword">return</span> keys;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>Return the number of elements in an object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.size = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+        <span class="hljs-keyword">if</span> (obj == <span class="hljs-literal">null</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">return</span> isArrayLike(obj) ? obj.length : _.keys(obj).length;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <p>An internal function for creating assigner functions.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> createAssigner = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">keysFunc, defaults</span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) </span>{
+            <span class="hljs-keyword">var</span> length = <span class="hljs-built_in">arguments</span>.length;
+            <span class="hljs-keyword">if</span> (defaults) {
+                obj = <span class="hljs-built_in">Object</span>(obj);
+            }
+            <span class="hljs-keyword">if</span> (length &lt; <span class="hljs-number">2</span> || obj == <span class="hljs-literal">null</span>) {
+                <span class="hljs-keyword">return</span> obj;
+            }
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> index = <span class="hljs-number">1</span>; index &lt; length; index++) {
+                <span class="hljs-keyword">var</span> source = <span class="hljs-built_in">arguments</span>[index],
+                    keys = keysFunc(source),
+                    l = keys.length;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; l; i++) {
+                    <span class="hljs-keyword">var</span> key = keys[i];
+                    <span class="hljs-keyword">if</span> (!defaults || obj[key] === <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>) {
+                        obj[key] = source[key];
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> obj;
+        };
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-81">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-81">&#182;</a>
+              </div>
+              <p>Extend a given object with all the properties in passed-in object(s).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _.extend = createAssigner(_.allKeys);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-82">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-82">&#182;</a>
+              </div>
+              <h2 id="low-level-helpers">Low Level Helpers</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-83">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-83">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-84">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-84">&#182;</a>
+              </div>
+              <p>Invokes constructor with array of arguments.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    utils.construct = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">constructor, args</span>) </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">F</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">return</span> constructor.apply(<span class="hljs-keyword">this</span>, args);
+        }
+        F.prototype = constructor.prototype;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> F();
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-85">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-85">&#182;</a>
+              </div>
+              <p>Define bind if not defined.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Function</span>.prototype.bind !== <span class="hljs-string">'function'</span>) {
+        <span class="hljs-built_in">Function</span>.prototype.bind = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bind</span>(<span class="hljs-params">obj</span>) </span>{
+            <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>),
+                self = <span class="hljs-keyword">this</span>,
+                nop = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                },
+                bound = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                    <span class="hljs-keyword">return</span> self.apply(
+                        <span class="hljs-keyword">this</span> <span class="hljs-keyword">instanceof</span> nop ? <span class="hljs-keyword">this</span> : (obj || {}), args.concat(
+                            <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>)
+                        )
+                    );
+                };
+            nop.prototype = <span class="hljs-keyword">this</span>.prototype || {};
+            bound.prototype = <span class="hljs-keyword">new</span> nop();
+            <span class="hljs-keyword">return</span> bound;
+        };
+    }
+
+}(
+    <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span> === <span class="hljs-string">'object'</span>
+        ? <span class="hljs-built_in">window</span>.di = {}
+        : <span class="hljs-keyword">this</span>
+));</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
