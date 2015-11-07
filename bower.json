@@ -4,14 +4,13 @@
     "keywords": [
         "di", "inceptor", "ownership", "dependency", "injection"
     ],
-    "ignore" : [
+    "ignore": [
         "docs",
         "test",
         "*.yml",
         "CNAME",
         "index.html",
         "favicon.ico",
-        "CONTRIBUTING.md",
         ".*",
         "component.json",
         "package.json",
