@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Nercury/inceptor-js.svg?branch=master)](https://travis-ci.org/Nercury/inceptor-js)
 [![Coverage Status](https://coveralls.io/repos/Nercury/inceptor-js/badge.svg?branch=master&service=github)](https://coveralls.io/github/Nercury/inceptor-js?branch=master)
+[![npm version](https://badge.fury.io/js/inceptor.svg)](https://badge.fury.io/js/inceptor)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/nercury.svg)](https://saucelabs.com/u/nercury)
 
