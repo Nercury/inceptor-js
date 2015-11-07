@@ -84,4 +84,40 @@
         assert.ok(dReadyCalled);
     });
 
+    test('throws when loading undefined', function(assert) {
+        assert.raises(
+            function() {
+                /*eslint no-undefined: 0*/
+                di.load(undefined);
+            },
+            'Error: Trying to load undefined value as Scope.',
+            'expected that loading with undefined scope raises error'
+        );
+    });
+
+    test('throws when loading non-scope', function(assert) {
+        assert.raises(
+            function() {
+                di.load(function() {});
+            },
+            'Error: Failed to load Scope - received object with no typeId.',
+            'expected that loading non-scope raises error'
+        );
+    });
+
+    test('throws when loading trying to load dependencies into already used dependency map', function(assert) {
+        assert.raises(
+            function() {
+                var A = di.scope(),
+                    B = di.scope(),
+                    deps = di.load(A);
+
+                deps.create(A);
+                deps.load(B);
+            },
+            'Error: Should not load more scopes after any of the loaded scopes were created.',
+            'expected that used dependency map becomes immutable'
+        );
+    });
+
 }());

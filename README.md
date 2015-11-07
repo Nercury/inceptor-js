@@ -22,6 +22,7 @@ these dependencies are created.
 - Does not need string names to map objects.
 - Code is well-tested.
 - Scopes can be tested in isolation without dependency map.
+- Once dependency map is used, it becomes immutable.
 - No global variables or containers!
 
 ## How does it work?

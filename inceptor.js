@@ -85,6 +85,9 @@
         // Tracks all loaded scopes, so that they are not loaded twice.
         this.loadedList = {};
 
+        // Flag to make sure nothing is loaded after the container objects are created.
+        this.loaded = false;
+
         // Constructors contain a list of functions for each scope type
         // that are invoked when a scope is initialized.
         this.constructors = {};
@@ -111,13 +114,20 @@
     };
 
     // Loads a scope list and all child scopes into this dependency map.
-    Deps.prototype.load = function(loadList) {
-        acceptLoaderList(this, loadList);
+    Deps.prototype.load = function(list) {
+        if (typeof list.typeId !== 'undefined') {
+            acceptLoaderList(this, arguments);
+        } else {
+            acceptLoaderList(this, list);
+        }
     };
 
     // Create new instance of scope together with all loaded Deps.
     Deps.prototype.create = function(Scope, args) {
         var instance = utils.construct(Scope, args);
+
+        this.loaded = true;
+
         this.instanceQueue.push(instance);
         createDependencies(this);
         return instance;
